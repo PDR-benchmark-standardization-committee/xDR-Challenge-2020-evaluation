@@ -133,7 +133,7 @@ demo_estimation/
   └ VDR/
     └ results/
        ├ indicator
-       └ score
+       └ index
          ├ file_score.csv
          └ total_score.csv
 ```
@@ -236,7 +236,7 @@ python main.py demo_estimation demo_ground_truth --area_weights demo_area_weight
 
 ## デモデータでの実行結果
 デモ用の正解値、推定軌跡データを利用することで、評価ツール実行の様子を確認することができます。  
-計算された指数は[demo_estimation/VDR/result/score] に保存されます。  
+計算された指数は[demo_estimation/VDR/result/index] に保存されます。  
 以下のような推定軌跡に対して評価を行った結果です。  
 VDR_Traj_No2.txt  
 <img src="images/VDR_sample.png" width=280px>  
