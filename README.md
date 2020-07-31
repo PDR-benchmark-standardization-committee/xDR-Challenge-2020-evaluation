@@ -130,8 +130,8 @@ demo_estimation/
     └ results/
        ├ indicator
        └ index
-         ├ file_score.csv
-         └ total_score.csv
+         ├ file_index.csv
+         └ total_index.csv
 ```
 
 
