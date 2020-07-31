@@ -13,7 +13,7 @@ from index_evaluation import CalcIndex
 import index_utils
 import utils
 
-sys.path.append('../LTS-benchmark-tool')
+sys.path.append('LTS-benchmark-tool')
 from indicator_evaluation import CalcIndicator
 import indicator_utils
 
