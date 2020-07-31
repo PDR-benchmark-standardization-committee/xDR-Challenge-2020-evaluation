@@ -189,7 +189,7 @@ python main.py demo_estimation demo_ground_truth --velocity 1.8
 ```
 
 You can select band width to calculate I_ca by Kernel Density Estimation  
-If you do not select band_width, scikit-learn default band widht is used.  
+If you do not select band_width, scipy default band widht is used.  
 ```
 python main.py demo_estimation demo_ground_truth --band_width 1.4
 ```
