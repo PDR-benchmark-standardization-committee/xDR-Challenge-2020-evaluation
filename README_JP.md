@@ -1,12 +1,13 @@
 <div align="center">
 <a href=https://unit.aist.go.jp/harc/xDR-Challenge-2020/><img src="images/banner-big.png" title="xDR Challenge 2020" width='500px'>
+ </a>
 </div>
 
 # xDR-Challenge-2020-evaluation
 屋内測位に関わる人を対象とした、xDR Challenge 2020コンペティションで使われる指数の計算を行えるツールです。  
 本ツールの目的は評価指標の使用例としての指数を実際に計算できることと、コンペの評価の透明性を高めることです。  
-指標と必要条件はコンペの指数を計算するために必要な値で、[LTS-benchmark-tool](http://150.82.176.139:8888/nagae-5/xdr-challenge-2020-evaluation/-/tree/master/Release-Version/LTS-benchmark-tool)を用いて計算されます。  
-指標と必要条件の具体的な計算内容を見たい場合は、[LTS-benchmark-tool](http://150.82.176.139:8888/nagae-5/xdr-challenge-2020-evaluation/-/tree/master/Release-Version/LTS-benchmark-tool)をご覧ください。  
+指標と必要条件はコンペの指数を計算するために必要な値で、[LTS-benchmark-tool](https://github.com/PDR-benchmark-standardization-committee/LTS-benchmark-tool)を用いて計算されます。  
+指標と必要条件の具体的な計算内容を見たい場合は、[LTS-benchmark-tool](https://github.com/PDR-benchmark-standardization-committee/LTS-benchmark-tool)をご覧ください。  
 以下が、計算可能な指数の概要と、対応する指標と必要条件になります
 
 | **指数**   | **対応する指標と必要条件**                       | **概要**                                                    |

@@ -7,8 +7,8 @@
 [日本語版(Japanese) README](README_JP.md)  
 People who are involved in indoor positioning technology can calculate their competition's index for xDR Challenge 2020.  
 This evaluation tool is to show the example of usage of indicators for the people who do not join the competition and guarantee the competition faireness.  
-The indicator and requiremet that are necessary for evaluating index are calculated by [LTS-benchmark-tool](http://150.82.176.139:8888/nagae-5/xdr-challenge-2020-evaluation/-/tree/master/Release-Version/LTS-benchmark-tool)   
-If you want see the detail of indicator and requirement calculation, see [LTS-benchmark-tool](http://150.82.176.139:8888/nagae-5/xdr-challenge-2020-evaluation/-/tree/master/Release-Version/LTS-benchmark-tool)   
+The indicator and requiremet that are necessary for evaluating index are calculated by [LTS-benchmark-tool](https://github.com/PDR-benchmark-standardization-committee/LTS-benchmark-tool)   
+If you want see the detail of indicator and requirement calculation, see [LTS-benchmark-tool](https://github.com/PDR-benchmark-standardization-committee/LTS-benchmark-tool)   
 
 | **Index**  | **Corresspond Indicator and Requirement**| **Description**                                          |
  ---         |---                                 |---                                       
