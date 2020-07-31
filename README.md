@@ -33,6 +33,9 @@ pandas==1.0.1
 texttable==1.6.2  
 tqdm==4.43.0  
 opencv-python==4.2.0.34  
+matplotlib==3.1.3 
+scipy==1.4.1
+seaborn==0.10.1  
 ```
 
 ## Description of Files
