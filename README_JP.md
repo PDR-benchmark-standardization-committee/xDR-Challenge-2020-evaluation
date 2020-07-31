@@ -64,7 +64,7 @@ PDR, VDRの推定軌跡ファイルをそれぞれ[estimatiion_folder]/PDR, [est
 デモデータの評価を行いたい場合、ご自身の推定軌跡ファイルを用意する必要はありません。  
 
 ```
-LTS-benchmark-tool/
+xDR-Challenge-2020-evaluation/
     ├ estimation_folder (demo_estimation)/
     │       └ VDR/[**VDR esimation files**]
     │       └ PDR/[**PDR estimation files**]
