@@ -42,8 +42,6 @@ seaborn==0.10.1
 
 | **ファイル名**         | **概要**                                                                 |
  ---                     |---                                       
-| demo_groud_truth       | デモ用正解値データ. ディレクトリ構造を記載した設定ファイルを配置してます |
-| demo_estimation        | デモ用推定軌跡データ                                                     |
 | main.py                | 評価実行用スクリプト                                                     | 
 | index_evaluation.py    | 指数計算モジュール                                                       |
 | dataloader.py          | 正解データ, 推定軌跡読み込みモジュール                                   |
