@@ -42,8 +42,6 @@ seaborn==0.10.1
 
 | **Filename**           | **Description**                                                                    |
  ---                     |---                                       
-| demo_groud_truth       | Demo ground truth files for evaluation. data strucure config shoud be placed here  |
-| demo_estimation        | Demo estimation files for evaluation. PDR and VDR directory should be sub directory|
 | main.py                | Execute evaluation script for index                                                | 
 | index_evaluation.py    | Module for calculating index                                                       |
 | dataloader.py          | Module for loading ground truth data, estimation data                              |
