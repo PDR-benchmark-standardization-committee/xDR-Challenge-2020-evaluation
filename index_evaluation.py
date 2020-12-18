@@ -42,7 +42,10 @@ class CalcIndex(object):
         CE50 = np.median(CE)
         logger.debug('CE50: {}'.format(CE50))
 
-        if CE50 < 1:
+        if CE50 == -1:
+            index = 0
+
+        elif CE50 < 1:
             index = 100 - 10 * CE50
         
         elif 1 <= CE50 <= 30:
@@ -83,7 +86,10 @@ class CalcIndex(object):
         EAG50 = np.median(EAG)
         logger.debug('EAG50: {}'.format(EAG50))
 
-        if EAG50 < 0.05:
+        if EAG50 == -1:
+            index = 0
+
+        elif EAG50 < 0.05:
             index = 100
 
         elif 0.05 <= EAG50 <= 2.0:
@@ -192,4 +198,24 @@ class CalcIndex(object):
 
         logger.debug('Calculate obstacle error END')
         logger.debug('I_obstacle : {}'.format(index))
+        return index
+
+    def I_coverage(self, Ans_Ref_count, no_match_count):
+        '''
+        Calculate trajectory percentage index
+
+        Returns
+        -------
+        index : float
+            trajectory percentage
+
+        I_coverage = 100 * no_match_count / Ans_Ref_count
+        '''
+
+        logger.debug('Calculate trajectory percentage START')
+
+        index = 100.0 * (Ans_Ref_count - no_match_count) / Ans_Ref_count
+
+        logger.debug('Calculate trajectory percentage END')
+        logger.debug('I_coverage : {}'.format(index))
         return index

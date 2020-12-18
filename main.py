@@ -66,6 +66,8 @@ def main(args):
         EAG_total = []
 
         for tra_filename in tra_files:
+            Ans_Ref_count = 0
+            no_match_count = 0
             logger.debug('{} Evaluation START'.format(tra_filename))
             print('{} evaluation progress...'.format(tra_filename))
  
@@ -97,9 +99,14 @@ def main(args):
             # I_ce, CE
             if 'I_ce' in args.index:
                 CE = evaluation_indicator.CE_calculation(tra_data, eval_point_outof_bup)
+                CE_count = len(CE)
+                CE_no_match_count = CE.count(-1)
+                del CE[:CE_no_match_count]
+                if CE == []:
+                    CE = [-1]
                 CE_percentile = indicator_utils.calc_percentile(CE, args.CE_percentile)
                 indicator_holder.add_indicator(f'CE{args.CE_percentile}', CE_percentile)
-        
+
                 CE_savedir = os.path.join(indicator_savedir, 'CE')
                 CE_total.extend(CE)
                 utils.create_dir(CE_savedir) 
@@ -109,6 +116,8 @@ def main(args):
                 
                 I_ce = evaluation_index.I_ce(CE)
                 index_holder.add_index('I_ce', I_ce)
+                Ans_Ref_count += CE_count
+                no_match_count += CE_no_match_count
 
             # I_ca, CA    
             if 'I_ca' in args.index:
@@ -148,6 +157,9 @@ def main(args):
             # I_eag, EAG
             if 'I_eag' in args.index:
                 EAG = evaluation_indicator.EAG_calculation(tra_data, ref_point, eval_point_between_bup)
+                EAG_count = len(EAG)
+                EAG_no_match_count = EAG.count(-1)
+                del EAG[:EAG_no_match_count]
                 if EAG == []:
                     EAG = [-1]
                 EAG_percentile = indicator_utils.calc_percentile(EAG, args.EAG_percentile)
@@ -155,13 +167,15 @@ def main(args):
 
                 EAG_savedir = os.path.join(indicator_savedir, 'EAG')
                 EAG_total.extend(EAG)
-                utils.create_dir(EAG_savedir)                 
+                utils.create_dir(EAG_savedir)
                 indicator_utils.save_indicator(data=EAG, indicator_name='EAG', save_dir=EAG_savedir, save_filename=f'Traj_No{tra_num}_EAG.csv')
                 EAG_hist = indicator_utils.draw_histgram(data=EAG, indicator_name='EAG', percentile=args.EAG_percentile)
                 indicator_utils.save_figure(EAG_hist, save_dir=EAG_savedir, save_filename=f'Traj_No{tra_num}_EAG_histgram.png')
                 
                 I_eag = evaluation_index.I_eag(EAG)
                 index_holder.add_index('I_eag', I_eag)
+                Ans_Ref_count += EAG_count
+                no_match_count += EAG_no_match_count
 
             # I_velocity, Requirement for moving velocity
             if 'I_velocity' in args.index:
@@ -191,8 +205,12 @@ def main(args):
                                                             list(obstacle_df['obstacle_cordinate_count']))
                 index_holder.add_index('I_obstacle', I_obstacle)
 
+            if 'I_coverage' in args.index:
+                I_coverage = evaluation_index.I_coverage(Ans_Ref_count, no_match_count)
+                index_holder.add_index('I_coverage', I_coverage)
+
             logger.debug('{} Evaluation END'.format(tra_filename))
-        
+
         # Show each file's index
         file_index_summary = index_holder.summarize_file_index()
         utils.stdout_dataframe(file_index_summary, title='file index')
@@ -220,12 +238,14 @@ def main(args):
             indicator_utils.save_figure(CE_total_hist, save_dir=CE_savedir, save_filename=f'CE_total_histgram.png')
             CE_cumulative_sum = indicator_utils.draw_cumulative_sum(CE_total, 'CE')
             indicator_utils.save_figure(CE_cumulative_sum, save_dir=CE_savedir, save_filename=f'CE_total_cumulative_sum.png')
+            indicator_utils.save_total_indicator(data=CE_total, indicator_name='CE', save_dir=CE_savedir, save_filename=f'CE_total_cumulative_sum.csv')
 
         if 'I_eag' in args.index:
             EAG_total_hist = indicator_utils.draw_histgram(data=EAG_total, indicator_name='EAG', percentile=args.EAG_percentile)
             indicator_utils.save_figure(EAG_total_hist, save_dir=EAG_savedir, save_filename=f'EAG_total_histgram.png')
             EAG_cumulative_sum = indicator_utils.draw_cumulative_sum(EAG_total, 'EAG')
             indicator_utils.save_figure(EAG_cumulative_sum, save_dir=EAG_savedir, save_filename=f'EAG_total_cumulative_sum.png')
+            indicator_utils.save_total_indicator(data=EAG_total, indicator_name='EAG', save_dir=EAG_savedir, save_filename=f'EAG_total_cumulative_sum.csv')
 
         logger.debug('- {}, {} evaluation END -'.format(args.trajection_folder, track))
     
@@ -281,12 +301,13 @@ if __name__ == '__main__':
                         help='Logger debug mode')
 
     args = parser.parse_args()
-    args.index = ['I_ce', 'I_ca', 'I_eag', 'I_velocity', 'I_obstacle'] if not args.index else args.index
+    args.index = ['I_ce', 'I_ca', 'I_eag', 'I_velocity', 'I_obstacle', 'I_coverage'] if not args.index else args.index
     correspondence_index_indicator = {'I_ce': 'CE', 
                                    'I_ca': 'CA',
                                    'I_eag': 'EAG', 
                                    'I_velocity': 'requirement_velocity',
-                                   'I_obstacle': 'requirement_obstacle'}
+                                   'I_obstacle': 'requirement_obstacle',
+                                   'I_coverage': 'trajectory_percentage'}
     args.indicators = [correspondence_index_indicator[index] for index in args.index]
 
     #　Logger setting

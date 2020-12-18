@@ -29,8 +29,11 @@ class IndexHolder(object):
         
         Score = 0
         for key, value in total_index_stats.items():
-            logger.debug('{} : {}, weight: {}'.format(key, value, weights[key].values[0]))
-            Score += weights[key] * value
+            if key is not 'I_coverage':
+                logger.debug('{} : {}, weight: {}'.format(key, value, weights[key].values[0]))
+                Score += weights[key] * value
+        #trajectory percentage
+        Score = Score * (value / 100)
 
         total_index_stats['Score'] = Score.values[0]
 
