@@ -38,9 +38,9 @@ def config(track, config_file='config.ini'):
     config_ini.read(config_file, encoding='utf-8')
     conf = dict()
 
-    ini_names ={'dir_name':['map_dname', 'ans_dname', 'ref_dname', 'bup_dname'],
-                'file_name':['map_image_fname', 'map_size_fname', 'area_fname', 
-                            'ref_fname', 'ans_fname', 'bup_info_fname']}
+    ini_names ={'dir_name':['map_dname', 'ans_dname', 'ref_dname', 'bup_dname', 'ble_dname'],
+                'file_name':['map_image_fname', 'map_size_fname', 'area_fname', 'ref_fname', 
+                'ans_fname', 'bup_info_fname', 'ble_info_fname']}
 
     ground_truth_dname = config_ini['ANSWER']['ground_truth_dname'].strip("'")
     
@@ -120,7 +120,7 @@ def map_size(base_dname, map_size_fname):
 def map_image(base_dname, map_image_fname):
 
     '''
-    load map bitmap image
+    load map bitmap
 
     Parameters
     ----------
@@ -142,7 +142,7 @@ def map_image(base_dname, map_image_fname):
     bitmap = np.where(map_img==255, 0, 1)
     logger.debug('map image load complete! image shape:{}'.format(bitmap.shape))
 
-    return bitmap 
+    return bitmap
 
 def bup_info(base_dname, bup_info_fname):
     '''
@@ -324,3 +324,32 @@ def filter_evaluation_data_between_bup(evaluation_point, bup_info, bup_flag):
         logger.debug('evaluation point OUT OF bup period is selected')
     
     return eval_point
+
+def ble_info(base_dname, ble_info_fname):
+    '''
+    Load true ble info file
+
+    Parameters
+    ----------
+    base_dname : str
+    ble_info_fname : str
+    
+    Returns
+    -------
+    ble_info : DataFrame
+        columns = ['mac_address', 'orientatio', 'height_m', 'x_position_m', 'y_position_m', 'Ptx', 'Lux']
+    '''
+    
+    ble_info_path = os.path.join(base_dname, ble_info_fname)
+    logger.debug('Loading BLE info :{}'.format(ble_info_path))
+
+    try:
+        ble_info = pd.read_csv(ble_info_path)
+    except FileNotFoundError:
+        logger.debug('{} does not exist'.format(ble_info_path))
+        return None
+
+    logger.debug('BLE info load complete! columns:{}, shape:{}'.\
+            format(ble_info.columns, ble_info.shape))
+
+    return ble_info

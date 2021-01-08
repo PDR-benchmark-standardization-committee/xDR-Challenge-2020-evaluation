@@ -33,7 +33,7 @@ def main(args):
         # Load groundtruth files
         map_size = dataloader.map_size(conf['map_dname'], conf['map_size_fname'])
         map_image = dataloader.map_image(conf['map_dname'], conf['map_image_fname'])
-        area_info = dataloader.area_info(conf['map_dname'], conf['area_fname'])    
+        area_info = dataloader.area_info(conf['map_dname'], conf['area_fname'])
 
         # Create result save directory
         result_basedir = os.path.join(tra_dname, 'result')
@@ -79,6 +79,7 @@ def main(args):
             ref_point = dataloader.load_point(conf['ref_dname'], conf['ref_fname'].format(tra_num))
             ans_point = dataloader.load_point(conf['ans_dname'], conf['ans_fname'].format(tra_num))
             bup_info = dataloader.bup_info(conf['bup_dname'], conf['bup_info_fname'].format(tra_num))
+            ble_info = dataloader.ble_info(conf['ble_dname'], conf['ble_info_fname'].format(tra_num))
 
             index_holder.add_index('file_name', tra_filename)
             indicator_holder.add_indicator('file_name', tra_filename)
@@ -98,7 +99,10 @@ def main(args):
 
             # I_ce, CE
             if 'I_ce' in args.index:
-                CE = evaluation_indicator.CE_calculation(tra_data, eval_point_outof_bup)
+                CE_dataset = evaluation_indicator.CE_calculation(tra_data, eval_point_outof_bup)
+                CE_dataframe = CE_dataset['CE']
+                CE = CE_dataframe.values.tolist()
+                CE.sort()
                 CE_count = len(CE)
                 CE_no_match_count = CE.count(-1)
                 del CE[:CE_no_match_count]
@@ -113,6 +117,7 @@ def main(args):
                 indicator_utils.save_indicator(data=CE, indicator_name='CE', save_dir=CE_savedir, save_filename=f'Traj_No{tra_num}_CE.csv')
                 CE_hist = indicator_utils.draw_histgram(data=CE, indicator_name='CE', percentile=args.CE_percentile)
                 indicator_utils.save_figure(CE_hist, save_dir=CE_savedir, save_filename=f'Traj_No{tra_num}_CE_histgram.png')
+                indicator_utils.save_indicator_debug(data=CE_dataset, save_dir=CE_savedir, save_filename=f'Traj_No{tra_num}_CE_debug.csv')
                 
                 I_ce = evaluation_index.I_ce(CE)
                 index_holder.add_index('I_ce', I_ce)
@@ -156,7 +161,10 @@ def main(args):
         
             # I_eag, EAG
             if 'I_eag' in args.index:
-                EAG = evaluation_indicator.EAG_calculation(tra_data, ref_point, eval_point_between_bup)
+                EAG_dataset = evaluation_indicator.EAG_calculation(tra_data, ref_point, eval_point_between_bup)
+                EAG_dataframe = EAG_dataset['EAG']
+                EAG = EAG_dataframe.values.tolist()
+                EAG.sort()
                 EAG_count = len(EAG)
                 EAG_no_match_count = EAG.count(-1)
                 del EAG[:EAG_no_match_count]
@@ -171,6 +179,7 @@ def main(args):
                 indicator_utils.save_indicator(data=EAG, indicator_name='EAG', save_dir=EAG_savedir, save_filename=f'Traj_No{tra_num}_EAG.csv')
                 EAG_hist = indicator_utils.draw_histgram(data=EAG, indicator_name='EAG', percentile=args.EAG_percentile)
                 indicator_utils.save_figure(EAG_hist, save_dir=EAG_savedir, save_filename=f'Traj_No{tra_num}_EAG_histgram.png')
+                indicator_utils.save_indicator_debug(data=EAG_dataset, save_dir=EAG_savedir, save_filename=f'Traj_No{tra_num}_EAG_debug.csv')
                 
                 I_eag = evaluation_index.I_eag(EAG)
                 index_holder.add_index('I_eag', I_eag)
@@ -208,6 +217,12 @@ def main(args):
             if 'I_coverage' in args.index:
                 I_coverage = evaluation_index.I_coverage(Ans_Ref_count, no_match_count)
                 index_holder.add_index('I_coverage', I_coverage)
+
+            #draw trajectory
+            Tra_savedir = os.path.join(indicator_savedir, 'Trajectory')
+            utils.create_dir(Tra_savedir)
+            Trajectory_image = indicator_utils.draw_trajectory(tra_data, map_image, map_size, f'Trajectory_No{tra_num}', ref_point, ble_info)
+            indicator_utils.save_figure(Trajectory_image, save_dir=Tra_savedir, save_filename=f'Tra_No{tra_num}.png')
 
             logger.debug('{} Evaluation END'.format(tra_filename))
 
