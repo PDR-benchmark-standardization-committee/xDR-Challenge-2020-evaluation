@@ -22,11 +22,13 @@ class IndexHolder(object):
         file_index = pd.DataFrame(self.index_values)
         return file_index
 
-    def calc_total_index(self, weights):
+    def calc_total_index(self, weights, I_ce_total, I_eag_total):
         logger.debug('weights:{}'.format(weights))
         calc_index = [index_name for index_name in self.index_values.keys() if index_name != 'file_name']
         total_index_stats = {key : np.mean(self.index_values[key]) for key in calc_index}
-        
+        total_index_stats['I_ce'] = I_ce_total
+        total_index_stats['I_eag'] = I_eag_total
+
         Score = 0
         for key, value in total_index_stats.items():
             if key is not 'I_coverage':

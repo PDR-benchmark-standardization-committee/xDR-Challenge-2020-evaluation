@@ -232,8 +232,10 @@ def main(args):
         utils.save_csv(save_file=file_index_summary, save_dir=index_savedir, save_filename='file_index.csv')
 
         # Show total index
+        I_ce_total = evaluation_index.I_ce(CE_total)
+        I_eag_total = evaluation_index.I_eag(EAG_total)
         index_weights = dataloader.index_weights(config_file='index_weights.ini')
-        total_index = index_holder.calc_total_index(index_weights)
+        total_index = index_holder.calc_total_index(index_weights, I_ce_total, I_eag_total)
         utils.stdout_dataframe(total_index, title='total index')
         utils.save_csv(save_file=total_index, save_dir=index_savedir,save_filename='total_index.csv')
 
@@ -243,7 +245,7 @@ def main(args):
         utils.save_csv(save_file=file_indicator_summary, save_dir=indicator_savedir, save_filename='file_indicator.csv')
 
         # Show total indicator
-        total_indicator = indicator_holder.calc_total_indicator()
+        total_indicator = indicator_holder.calc_total_indicator(CE_total, EAG_total)
         utils.stdout_dataframe(total_indicator, title='total indicator')
         utils.save_csv(save_file=total_indicator, save_dir=indicator_savedir, save_filename='total_indicator.csv')
     
