@@ -21,7 +21,7 @@ If you want see the detail of indicator and requirement calculation, see [LTS-be
 ## Example of Evaluation Result
 You can calculate each trajection index for xDR Challenge 2020 competition 
 <div align="cenetr">
-<img src="images/result_graph.png" title="graph of index result" width='700px'>
+<img src="images/result_graph_v2.png" title="graph of index result" width='700px'>
 </div>
 
 
