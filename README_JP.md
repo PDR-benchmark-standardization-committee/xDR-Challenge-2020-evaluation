@@ -135,6 +135,38 @@ demo_estimation/
   └ VDR/
     └ results/
        ├ indicator
+       | ├ CA
+       | | ├ Traj_No*_area*_CA.png
+       | | └ Traj_No*_CA.csv
+       | |
+       | ├ CE
+       | | ├ CE_total_cumulative_sum.csv
+       | | ├ CE_total_cumulative_sum.png
+       | | ├ CE_total_histgram.png
+       | | ├ Traj_No*_CE.csv
+       | | ├ Traj_No*_CE_debug.csv
+       | | └ Traj_No*_CE_histgram.png
+       | |
+       | ├ EAG
+       | | ├ EAG_total_cumulative_sum.csv
+       | | ├ EAG_total_cumulative_sum.png
+       | | ├ EAG_total_histgram.png
+       | | ├ Traj_No*_EAG.csv
+       | | ├ Traj_No*_EAG_debug.csv
+       | | └ Traj_No*_EAG_histgram.png
+       | |
+       | ├ requirement_obstacle
+       | | └ Traj_No*_obstacle.csv
+       | |
+       | ├ requirement_velocity
+       | | └ Traj_No*_moving_velocity.csv
+       | |
+       | ├ Trajectory
+       | | └ Tra_No*.png
+       | |
+       | ├ file_indicator.csv
+       | └ total_indicator.csv
+       |
        └ index
          ├ file_index.csv
          └ total_index.csv
