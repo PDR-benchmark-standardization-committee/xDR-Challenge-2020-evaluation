@@ -11,12 +11,13 @@
 以下が、計算可能な指数の概要と、対応する指標と必要条件になります
 
 | **指数**   | **対応する指標と必要条件**                       | **概要**                                                    |
- ---         |---                                               |---                                       
-| I_ce       | 誤差絶対量: CE (Circular Error)                  | 正解座標と時間的最近傍の軌跡の距離が近いか評価              |
-| I_ca       | 誤差分布偏移: CA (Circular Accuracy)             | 地図上のエリアごとの正解座標との誤差の分布を評価            | 
-| I_eag      | 誤差累積速度: EAG (Accumulation Gradient)        | 位置補正のための座標からの誤差の累積スピードを評価          |
-| I_velocity | 移動速度基準: Requirement for Moving Velocity    | 軌跡の速度が人間の歩行速度(1.5 m/s)以下であるか評価         |
-| I_obstacle | 軌跡経路基準: Requirement for Obstacle Avoidance | 地図上の軌跡が人間が侵入できない障害物を通過していないか評価|
+ ---         |---                                                 |---                                       
+| I_ce       | 誤差絶対量: CE (Circular Error)                     | 正解座標と時間的最近傍の軌跡の距離が近いか評価             |
+| I_ca       | 誤差分布偏移: CA (Circular Accuracy)                | 地図上のエリアごとの正解座標との誤差の分布を評価            | 
+| I_eag      | 誤差累積速度: EAG (Accumulation Gradient)           | 位置補正のための座標からの誤差の累積スピードを評価          |
+| I_velocity | 移動速度基準: Requirement for Moving Velocity       | 軌跡の速度が人間の歩行速度(1.5 m/s)以下であるか評価        |
+| I_obstacle | 軌跡経路基準: Requirement for Obstacle Avoidance    | 地図上の軌跡が人間が侵入できない障害物を通過していないか評価 |
+| I_coverage | 軌跡提出率基準: Requirement for Trajectory Coverage | 正解値の各時刻と軌跡の各時刻を比較し軌跡の提出割合を評価     |
 
 ## 評価結果例
 下表のようなxDR Challenge 2020 のコンペティションで使用される指数の値を各推定軌跡ごとに求めることが可能です。
@@ -243,50 +244,50 @@ VDR_Traj_No2.txt
 <img src="images/VDR_sample.png" width=280px>  
 
 ```                                                 
-(python36) $ python main.py demo_estimation --VDR
-track: ['VDR']
-index: ['I_ce', 'I_ca', 'I_eag', 'I_velocity', 'I_obstacle']
-VDR_Traj_No1.txt evaluation progress...
-100%|█████████████████████████████████████| 9006/9006 [00:02<00:00, 3168.33it/s]
-VDR_Traj_No2.txt evaluation progress...
-100%|█████████████████████████████████████| 7868/7868 [00:01<00:00, 4276.67it/s]
-VDR_Traj_No3.txt evaluation progress...
-100%|█████████████████████████████████████| 8957/8957 [00:02<00:00, 3039.98it/s]
-VDR_Traj_No4.txt evaluation progress...
-100%|█████████████████████████████████████| 7716/7716 [00:01<00:00, 4169.47it/s]
-VDR_Traj_No5.txt evaluation progress...
-100%|█████████████████████████████████████| 9054/9054 [00:03<00:00, 2485.73it/s]
-VDR_Traj_No6.txt evaluation progress...
-100%|█████████████████████████████████████| 7718/7718 [00:02<00:00, 3726.62it/s]
+(python36) $ python main.py demo_estimation demo_ground_truth --PDR
+track: ['PDR']
+index: ['I_ce', 'I_ca', 'I_eag', 'I_velocity', 'I_obstacle', 'I_coverage']
+PDR_Traj_No1.txt evaluation progress...
+100%|█████████████████████████████████████| 19927/19927 [00:01<00:00, 10515.99it/s]
+PDR_Traj_No2.txt evaluation progress...
+100%|█████████████████████████████████████| 40998/40998 [00:03<00:00, 10556.67it/s]
+PDR_Traj_No4.txt evaluation progress...
+100%|█████████████████████████████████████| 15304/15304 [00:01<00:00, 10626.68it/s]
+PDR_Traj_No5.txt evaluation progress...
+100%|█████████████████████████████████████| 19332/19332 [00:01<00:00, 10726.74it/s]
+PDR_Traj_No6.txt evaluation progress...
+P00%|█████████████████████████████████████| 41161/41161 [00:03<00:00, 10324.19it/s]
+PDR_Traj_No7.txt evaluation progress...
+100%|█████████████████████████████████████| 45351/45351 [00:04<00:00, 10443.82it/s]
 -------- file index --------
-   file_name        I_ce     I_ca     I_eag    I_velocity   I_obstacle
-======================================================================
-VDR_Traj_No1.txt   85.273   51.256   98.448      94.137       86.725  
-VDR_Traj_No2.txt   77.126   53.816   94.461      98.081       90.180  
-VDR_Traj_No3.txt   89.130   62.959   100.000     95.132       85.035  
-VDR_Traj_No4.txt   89.409   63.069   11.275      97.564       91.464  
-VDR_Traj_No5.txt   81.077   31.457   98.078      94.621       77.852  
-VDR_Traj_No6.txt   90.279   28.713   97.878      94.545       91.440   
+   file_name        I_ce     I_ca     I_eag    I_velocity   I_obstacle   I_coverage
+===================================================================================
+PDR_Traj_No1.txt   93.816   77.300   100.000     96.005       98.661       97.101
+PDR_Traj_No2.txt   95.775   91.027   100.000     98.576       98.777       99.506
+PDR_Traj_No4.txt   89.638   62.864   100.000     99.889       99.310       97.606
+PDR_Traj_No5.txt   94.163   76.925   100.000     98.588       98.000       97.463
+PDR_Traj_No6.txt   92.947   80.694   100.000     98.205       98.975       98.368
+PDR_Traj_No7.txt   94.758   81.695   100.000     99.632       99.555       96.942
 
 -------- total index --------
- I_ce     I_ca    I_eag    I_velocity   I_obstacle   Score 
-===========================================================
-85.382   48.545   83.356     95.680       87.116     80.016 
+ I_ce     I_ca     I_eag    I_velocity   I_obstacle   I_coverage   Score
+=========================================================================
+94.033   78.418   100.000     98.482       98.879       97.831     91.762
 
 -------- file indicator --------
    file_name       CE50     CA     EAG50   requirement_velocity   requirement_obstacle
 ======================================================================================
-VDR_Traj_No1.txt   5.271   4.874   0.080          0.571                  0.133        
-VDR_Traj_No2.txt   7.633   4.618   0.158          0.264                  0.098        
-VDR_Traj_No3.txt   4.152   3.704   0.029          0.568                  0.150        
-VDR_Traj_No4.txt   4.071   3.693   1.780          0.365                  0.085        
-VDR_Traj_No5.txt   6.488   6.854   0.087          0.611                  0.221        
-VDR_Traj_No6.txt   3.819   7.129   0.091          0.529                  0.086         
+PDR_Traj_No1.txt   2.793   2.270   0.047          0.246                  0.013
+PDR_Traj_No2.txt   2.225   0.897   0.010          0.130                  0.012
+PDR_Traj_No4.txt   4.005   3.714   0.012          0.090                  0.007
+PDR_Traj_No5.txt   2.693   2.308   0.011          0.150                  0.020
+PDR_Traj_No6.txt   3.045   1.931   0.016          0.172                  0.010
+PDR_Traj_No7.txt   2.520   1.830   0.012          0.081                  0.004
 
 -------- total indicator --------
 CE50     CA     EAG50   requirement_velocity   requirement_obstacle
 ===================================================================
-5.239   5.145   0.371          0.484                  0.129         
+2.730   2.158   0.012          0.145                  0.011
 ```
 
 ## xDR Challenge 2020 サンプルデータでの評価
