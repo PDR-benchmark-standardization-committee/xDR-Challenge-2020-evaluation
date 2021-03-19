@@ -97,19 +97,28 @@ xDR-Challenge-2020-evaluation/
 ground_truth_dname = 'demo_ground_truth'
 
 [PDR]
-; 各評価用データのディレクトリ名
 map_dname = 'PDR_Map'
 ans_dname = 'PDR_Ans'
 ref_dname = 'PDR_Ref'
-bup_dname = 'PDR_Bup'
+ALIP_dname = 'PDR_Bup'
+BLE_dname = 'BLE_Beacon'
 
-; 各評価用データのファイル名
 map_image_fname = 'Map_image.bmp'
 map_size_fname = 'Map_size.csv'
-area_fname = 'Area.csv'
+area_fname = 'PDR_Area.csv'
 ref_fname = 'PDR_Ref_No{}.csv'
 ans_fname = 'PDR_Ans_No{}.csv'
-bup_info_fname = 'PDR_Bup_info_No{}.csv'
+ALIP_info_fname = 'PDR_Bup_info_No{}.csv'
+BLE_info_fname = 'BLE_info.csv'
+
+map_obstacle_color = 'gray'
+map_trajectory_color = 'green'
+map_ref_color = 'orange'
+map_ble_color = 'blue'
+
+map_trajectory_size = '0.2'
+map_ref_size = '0.3'
+map_ble_size = '2'
 
 [VDR]
 ; PDRと同様にディレクトリ名・ファイル名を記載
