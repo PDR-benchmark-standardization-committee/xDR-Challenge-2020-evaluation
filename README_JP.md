@@ -290,34 +290,6 @@ CE50     CA     EAG50   requirement_velocity   requirement_obstacle
 2.730   2.158   0.012          0.145                  0.011
 ```
 
-## xDR Challenge 2020 サンプルデータでの評価
-xDR Challenge 2020 の配布サンプルデータで評価を行う場合、データ読み込みのための設定ファイルである  
-[data_config_xDR_challenge_2020_sample_data.ini]をサンプルデータのフォルダ直下に配置してください。  
-[**注意**]:   
-サンプルデータの参照点は正解点として扱われます。  
-また、BUP情報がサンプルデータには含まれていないため、EAGの評価は行われません。  
-EAGでの評価を行うためには、BUP情報を記載したファイルをご自身で作成していただく必要があります。  
-また、エリア分割データがサンプルデータには含まれないため、CAの計算は全エリアの正解値を用いて行われます。    
-
-```
-xDR-Challenge-2020-evaluation/
-    ├ sample data estimation folder/
-    │       └ VDR/[**VDR esimation files**]
-    │       └ PDR/[**PDR estimation files**]
-    │
-    ├ [sample data ground truth folder]/
-    │       └ [data_config_xDR_challenge_2020_sample_data.ini]
-    │
-    ├ main.py
-    ├ index_evaluation.py
-    ├ index_utils.py
-    ├ utils.py
-    ├ dataloader.py
-    ├ index_weights.ini
-    ├ requirements.txt
-    └ README.md
-```
-
 ## ライセンス
 Copyright (c) 2020 Satsuki Nagae and PDR benchmark standardization committee.  
 xDR-Challenge-2020-evaluation is open source software under the [MIT license](LICENSE).  
