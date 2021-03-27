@@ -181,7 +181,7 @@ python main.py estimation_folder groud_truth_folder
 デモデータの評価を行った場合、以下のパスに結果が保存されます。
 
 ```
-demo_estimation/
+estimation_folder/
   | VDR/
   | └ result/
   |    ├ indicator
@@ -223,7 +223,6 @@ demo_estimation/
   └ PDR/
     └result/ [***Almost the same as VDR result folder***]
 ```
-
 
 ## コマンドライン引数
 以下のコマンドライン引数を追加することが可能となっています。
