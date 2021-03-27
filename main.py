@@ -34,6 +34,8 @@ def main(args):
         map_size = dataloader.map_size(conf['map_dname'], conf['map_size_fname'])
         map_image = dataloader.map_image(conf['map_dname'], conf['map_image_fname'])
         area_info = dataloader.area_info(conf['map_dname'], conf['area_fname'])
+        map_color = dataloader.map_color(conf['map_obstacle_color'], conf['map_trajectory_color'], conf['map_ref_color'], conf['map_BLE_color'])
+        map_makersize = dataloader.map_makersize(conf['map_trajectory_size'], conf['map_ref_size'], conf['map_BLE_size'], conf['map_grid'])
 
         # Create result save directory
         result_basedir = os.path.join(tra_dname, 'result')
@@ -78,8 +80,8 @@ def main(args):
             # Load ground truth files
             ref_point = dataloader.load_point(conf['ref_dname'], conf['ref_fname'].format(tra_num))
             ans_point = dataloader.load_point(conf['ans_dname'], conf['ans_fname'].format(tra_num))
-            bup_info = dataloader.bup_info(conf['bup_dname'], conf['bup_info_fname'].format(tra_num))
-            ble_info = dataloader.ble_info(conf['ble_dname'], conf['ble_info_fname'].format(tra_num))
+            ALIP_info = dataloader.ALIP_info(conf['ALIP_dname'], conf['ALIP_info_fname'].format(tra_num))
+            BLE_info = dataloader.BLE_info(conf['BLE_dname'], conf['BLE_info_fname'].format(tra_num))
 
             index_holder.add_index('file_name', tra_filename)
             indicator_holder.add_indicator('file_name', tra_filename)
@@ -90,16 +92,16 @@ def main(args):
             else:
                 evaluation_point = dataloader.drop_ans_duplicated_with_ref(ans_point, ref_point)
                 
-            if bup_info is None:
-                eval_point_outof_bup = ans_point
-                eval_point_between_bup = pd.DataFrame(index=[], columns=['unixtime', 'x_position_m', 'y_position_m'])
+            if ALIP_info is None:
+                eval_point_outof_ALIP = ans_point
+                eval_point_between_ALIP = pd.DataFrame(index=[], columns=['unixtime', 'x_position_m', 'y_position_m'])
             else:
-                eval_point_outof_bup = dataloader.filter_evaluation_data_between_bup(evaluation_point, bup_info, bup_flag=False)
-                eval_point_between_bup = dataloader.filter_evaluation_data_between_bup(evaluation_point, bup_info, bup_flag=True)
+                eval_point_outof_ALIP = dataloader.filter_evaluation_data_between_ALIP(evaluation_point, ALIP_info, ALIP_flag=False)
+                eval_point_between_ALIP = dataloader.filter_evaluation_data_between_ALIP(evaluation_point, ALIP_info, ALIP_flag=True)
 
             # I_ce, CE
             if 'I_ce' in args.index:
-                CE_dataset = evaluation_indicator.CE_calculation(tra_data, eval_point_outof_bup)
+                CE_dataset = evaluation_indicator.CE_calculation(tra_data, eval_point_outof_ALIP)
                 CE_dataframe = CE_dataset['CE']
                 CE = CE_dataframe.values.tolist()
                 CE.sort()
@@ -161,7 +163,7 @@ def main(args):
         
             # I_eag, EAG
             if 'I_eag' in args.index:
-                EAG_dataset = evaluation_indicator.EAG_calculation(tra_data, ref_point, eval_point_between_bup)
+                EAG_dataset = evaluation_indicator.EAG_calculation(tra_data, ref_point, eval_point_between_ALIP)
                 EAG_dataframe = EAG_dataset['EAG']
                 EAG = EAG_dataframe.values.tolist()
                 EAG.sort()
@@ -218,10 +220,10 @@ def main(args):
                 I_coverage = evaluation_index.I_coverage(Ans_Ref_count, no_match_count)
                 index_holder.add_index('I_coverage', I_coverage)
 
-            #draw trajectory
+            # Draw trajectory
             Tra_savedir = os.path.join(indicator_savedir, 'Trajectory')
             utils.create_dir(Tra_savedir)
-            Trajectory_image = indicator_utils.draw_trajectory(tra_data, map_image, map_size, f'Trajectory_No{tra_num}', ref_point, ble_info)
+            Trajectory_image = indicator_utils.draw_trajectory(tra_data, map_image, map_size, f'Trajectory_No{tra_num}', ref_point, BLE_info, map_color, map_makersize)
             indicator_utils.save_figure(Trajectory_image, save_dir=Tra_savedir, save_filename=f'Tra_No{tra_num}.png')
 
             logger.debug('{} Evaluation END'.format(tra_filename))
