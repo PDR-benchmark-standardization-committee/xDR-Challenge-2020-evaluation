@@ -56,7 +56,7 @@ seaborn==0.10.1
 ## Usage
 ### Step.1 Install
 ```
-git clone --recursive https://github.com/PDR-benchmark-standardization-committee/xDR-Challenge-2020-evaluation.git
+git clone --recursive https://github.com/PDR-benchmark-standardization-committee/xDR-Challenge-2020-evaluation
 cd xDR-Challenge-2020-evaluation
 pip install -r requirements.txt
 ```
