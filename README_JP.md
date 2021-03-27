@@ -67,6 +67,8 @@ PDR, VDRの推定軌跡ファイルをそれぞれ[estimatiion_folder]/PDR, [est
 
 ```
 xDR-Challenge-2020-evaluation/
+    ├ LTS-benchmark-tool/
+    |
     ├ estimation_folder/
     │       ├ VDR/
     |       |  └ VDR_Traj_No*.txt [**VDR esimation files**]
