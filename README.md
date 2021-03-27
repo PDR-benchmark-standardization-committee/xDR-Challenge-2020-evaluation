@@ -123,6 +123,11 @@ xDR-Challenge-2020-evaluation/
     ├ requirements.txt
     └ README.md
 ```
+#### VDR_Traj_No*.txt, PDR_Traj_No*.txt configuration
+The contents of the trajectory file are separated by commas and are as follows.  
+Does not include headers in the trajectory file.  
+| unixtime | x[m] | y[m] |
+|---       |---   |---   |
 
 ### Step.3 Place directory structure configuration 
 You need to prepare configuration file that correspond to ground truth folder to evaluate.  
