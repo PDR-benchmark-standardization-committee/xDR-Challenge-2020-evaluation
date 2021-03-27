@@ -71,7 +71,7 @@ xDR-Challenge-2020-evaluation/
     |
     ├ estimation_folder/
     │       ├ VDR/
-    |       |  └ VDR_Traj_No*.txt [**VDR esimation files**]
+    |       |  └ VDR_Traj_No*.txt [**VDR estimation files**]
     |       |
     │       └ PDR/
     |          └ PDR_Traj_No*.txt [**PDR esimation files**]
@@ -144,12 +144,14 @@ xDR-Challenge-2020-evaluation/
 ground_truth_dname = 'groud_truth_folder'
 
 [PDR]
+; 各評価用データのディレクトリ名
 map_dname = 'PDR_Map'
 ans_dname = 'PDR_Ans'
 ref_dname = 'PDR_Ref'
 ALIP_dname = 'PDR_ALIP'
 BLE_dname = 'BLE_Beacon'
 
+; 各評価用データのファイル名
 map_image_fname = 'Map_image.bmp'
 map_size_fname = 'Map_size.csv'
 area_fname = 'PDR_Area.csv'
@@ -158,11 +160,13 @@ ans_fname = 'PDR_Ans_No{}.csv'
 ALIP_info_fname = 'PDR_ALIP_info_No{}.csv'
 BLE_info_fname = 'BLE_info.csv'
 
+; 描画軌跡の色設定
 map_obstacle_color = 'gray'
 map_trajectory_color = 'green'
 map_ref_color = 'orange'
 map_ble_color = 'blue'
 
+; 描画軌跡の表示サイズ設定
 map_trajectory_size = '0.2'
 map_ref_size = '0.3'
 map_ble_size = '2'
