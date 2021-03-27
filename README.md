@@ -66,6 +66,8 @@ Place each track's estimation files at [estimatiion_folder]/PDR and [estimation_
 If you want to evaluate demo estimation files, you don't need to prepare estimation files.
 ```
 xDR-Challenge-2020-evaluation/
+    ├ LTS-benchmark-tool/
+    |
     ├ estimation_folder/
     │       ├ VDR/
     |       |  └ VDR_Traj_No*.txt [**VDR esimation files**]
