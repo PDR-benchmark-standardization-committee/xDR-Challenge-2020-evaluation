@@ -124,6 +124,11 @@ xDR-Challenge-2020-evaluation/
     ├ requirements.txt
     └ README.md
 ```
+#### VDR_Traj_No*.txt, PDR_Traj_No*.txtの構成
+軌跡ファイルの中身はカンマ区切りで以下のような構成となります。  
+※軌跡ファイル内にヘッダーは含みません。  
+| unixtime | x[m] | y[m] |
+|---       |---   |---   |
 
 ### Step.3 正解値データのディレクリ構造を記載した設定ファイルを用意
 正解データを読み込むために、正解値データのディレクトリ名、  
