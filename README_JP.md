@@ -6,8 +6,8 @@
 # xDR-Challenge-2020-evaluation
 屋内測位に関わる人を対象とした、xDR Challenge 2020コンペティションで使われる指数の計算を行えるツールです。  
 本ツールの目的は評価指標の使用例としての指数を実際に計算できることと、コンペの評価の透明性を高めることです。  
-指標と必要条件はコンペの指数を計算するために必要な値で、[LTS-benchmark-tool](https://github.com/PDR-benchmark-standardization-committee/LTS-benchmark-tool)を用いて計算されます。  
-指標と必要条件の具体的な計算内容を見たい場合は、[LTS-benchmark-tool](https://github.com/PDR-benchmark-standardization-committee/LTS-benchmark-tool)をご覧ください。  
+指標と必要条件はコンペの指数を計算するために必要な値で、[LTS-benchmark-tool](https://github.com/PDR-benchmark-standardization-committee/LTS-benchmark-tool/tree/xDR-Challenge-2020)を用いて計算されます。  
+指標と必要条件の具体的な計算内容を見たい場合は、[LTS-benchmark-tool](https://github.com/PDR-benchmark-standardization-committee/LTS-benchmark-tool/tree/xDR-Challenge-2020)をご覧ください。  
 以下が、計算可能な指数の概要と、対応する指標と必要条件になります
 
 | **指数**   | **対応する指標と必要条件**                       | **概要**                                                    |
@@ -51,12 +51,12 @@ seaborn==0.10.1
 | index_weights.ini      | コンペスコアを計算するための指数の重みの設定ファイル                     |
 | demo_area_weights.ini  | デモ推定軌跡用のエリア重み設定ファイル                                   |
 | requirements.txt       | Pythonの必要ライブラリのバージョンをまとめたファイル                     |
-| data_config_xDR_Challenge_2020_sample_data.ini| xDR Challenge 2020 サンプルデータを読み込むための設定ファイル|
+| data_config.ini        | xDR Challenge 2020 サンプルデータを読み込むための設定ファイル|
 
 ## 使用方法
 ### Step.1 インストール
 ```
-git clone --recursive https://github.com/PDR-benchmark-standardization-committee/xDR-Challenge-2020-evaluation
+git clone --recursive https://github.com/PDR-benchmark-standardization-committee/xDR-Challenge-2020-evaluation.git
 cd xDR-Challenge-2020-evaluation
 pip install -r requirements.txt
 ```
@@ -67,12 +67,52 @@ PDR, VDRの推定軌跡ファイルをそれぞれ[estimatiion_folder]/PDR, [est
 
 ```
 xDR-Challenge-2020-evaluation/
-    ├ estimation_folder (demo_estimation)/
-    │       └ VDR/[**VDR esimation files**]
-    │       └ PDR/[**PDR estimation files**]
+    ├ estimation_folder/
+    │       ├ VDR/
+    |       |  └ VDR_Traj_No*.txt [**VDR esimation files**]
+    |       |
+    │       └ PDR/
+    |          └ PDR_Traj_No*.txt [**PDR esimation files**]
     │
-    ├ groud_truth_folder (demo_ground_truth)/
-    │       └ [**data config ini file**]
+    ├ groud_truth_folder/
+    |       ├ BLE_Beacon/
+    |       |  └ BLE_info.csv
+    |       |
+    |       ├ VDR_ALIP/
+    |       |  └ VDR_ALIP_info_No*.csv
+    |       |
+    |       ├ VDR_Ans/
+    |       |  └ VDR_Ans_No*.csv
+    |       |
+    |       ├ VDR_Map/
+    |       |  ├ Map_image.bmp
+    |       |  ├ Map_size.csv
+    |       |  └ VDR_Area.csv
+    |       |
+    |       ├ VDR_Module/
+    |       |  └ VDR_Sens_No*.txt
+    |       |
+    |       ├ VDR_Ref/
+    |       |  └ VDR_Ref_No*.csv
+    |       |
+    |       ├ PDR_ALIP/
+    |       |  └ PDR_ALIP_info_No*.csv
+    |       |
+    |       ├ PDR_Ans/
+    |       |  └ PDR_Ans_No*.csv
+    |       |
+    |       ├ PDR_Map/
+    |       |  ├ Map_image.bmp
+    |       |  ├ Map_size.csv
+    |       |  └ PDR_Area.csv
+    |       |
+    |       ├ PDR_Module/
+    |       |  └ PDR_Sens_No*.txt
+    |       |
+    |       ├ PDR_Ref/
+    |       |  └ PDR_Ref_No*.csv
+    |       |
+    │       └ data_config.ini
     │
     ├ main.py
     ├ index_evaluation.py
@@ -88,13 +128,13 @@ xDR-Challenge-2020-evaluation/
 ### Step.3 正解値データのディレクリ構造を記載した設定ファイルを用意
 正解データを読み込むために、正解値データのディレクトリ名、  
 ファイル名を記載した設定ファイルを準備する必要があります。  
-ご自身の用意した正解データを利用する際は、demo_ground_truthのフォルダにあるdemo_data_config.iniファイルを  
+ご自身の用意した正解データを利用する際は、groud_truth_folderのフォルダにあるdata_config.iniファイルを  
 ご自身の正解データに合わせて修正し、正解データのディレクトリに配置してください。  
 以下のような設定ファイルをご自身の正解値データに合わせて作成してください。  
 ```
 ; 正解値データフォルダ名
 [ANSWER]
-ground_truth_dname = 'demo_ground_truth'
+ground_truth_dname = 'groud_truth_folder'
 
 [PDR]
 map_dname = 'PDR_Map'
@@ -119,6 +159,7 @@ map_ble_color = 'blue'
 map_trajectory_size = '0.2'
 map_ref_size = '0.3'
 map_ble_size = '2'
+map_grid = 'False'
 
 [VDR]
 ; PDRと同様にディレクトリ名・ファイル名を記載
@@ -133,7 +174,7 @@ python main.py [estimation_path] [ground_truth_path]
 ```
 デモデータの評価を実行したい場合は、以下のスクリプトを実行してください
 ```
-python main.py demo_estimation demo_ground_truth
+python main.py estimation_folder groud_truth_folder
 ```
 
 指数と、対応する指標と必要条件の評価結果が推定軌跡のフォルダ内に保存されます。  
@@ -141,44 +182,46 @@ python main.py demo_estimation demo_ground_truth
 
 ```
 demo_estimation/
-  └ VDR/
-    └ results/
-       ├ indicator
-       | ├ CA
-       | | ├ Traj_No*_area*_CA.png
-       | | └ Traj_No*_CA.csv
-       | |
-       | ├ CE
-       | | ├ CE_total_cumulative_sum.csv
-       | | ├ CE_total_cumulative_sum.png
-       | | ├ CE_total_histgram.png
-       | | ├ Traj_No*_CE.csv
-       | | ├ Traj_No*_CE_debug.csv
-       | | └ Traj_No*_CE_histgram.png
-       | |
-       | ├ EAG
-       | | ├ EAG_total_cumulative_sum.csv
-       | | ├ EAG_total_cumulative_sum.png
-       | | ├ EAG_total_histgram.png
-       | | ├ Traj_No*_EAG.csv
-       | | ├ Traj_No*_EAG_debug.csv
-       | | └ Traj_No*_EAG_histgram.png
-       | |
-       | ├ requirement_obstacle
-       | | └ Traj_No*_obstacle.csv
-       | |
-       | ├ requirement_velocity
-       | | └ Traj_No*_moving_velocity.csv
-       | |
-       | ├ Trajectory
-       | | └ Tra_No*.png
-       | |
-       | ├ file_indicator.csv
-       | └ total_indicator.csv
-       |
-       └ index
-         ├ file_index.csv
-         └ total_index.csv
+  | VDR/
+  | └ result/
+  |    ├ indicator
+  |    | ├ CA
+  |    | | ├ Traj_No*_area*_CA.png
+  |    | | └ Traj_No*_CA.csv
+  |    | |
+  |    | ├ CE
+  |    | | ├ CE_total_cumulative_sum.csv
+  |    | | ├ CE_total_cumulative_sum.png
+  |    | | ├ CE_total_histgram.png
+  |    | | ├ Traj_No*_CE.csv
+  |    | | ├ Traj_No*_CE_debug.csv
+  |    | | └ Traj_No*_CE_histgram.png
+  |    | |
+  |    | ├ EAG
+  |    | | ├ EAG_total_cumulative_sum.csv
+  |    | | ├ EAG_total_cumulative_sum.png
+  |    | | ├ EAG_total_histgram.png
+  |    | | ├ Traj_No*_EAG.csv
+  |    | | ├ Traj_No*_EAG_debug.csv
+  |    | | └ Traj_No*_EAG_histgram.png
+  |    | |
+  |    | ├ requirement_obstacle
+  |    | | └ Traj_No*_obstacle.csv
+  |    | |
+  |    | ├ requirement_velocity
+  |    | | └ Traj_No*_moving_velocity.csv
+  |    | |
+  |    | ├ Trajectory
+  |    | | └ Tra_No*.png
+  |    | |
+  |    | ├ file_indicator.csv
+  |    | └ total_indicator.csv
+  |    |
+  |    └ index
+  |      ├ file_index.csv
+  |      └ total_index.csv
+  └ PDR/
+    └result/ [***Almost the same as VDR result folder***]
 ```
 
 
@@ -190,16 +233,16 @@ PDR, VDR、どちらの評価を行うか選択することができます。
 引数なしの場合は、PDR, VDR両方とも評価されます。
 
 ```
-python main.py demo_estimation demo_ground_truth --VDR --PDR
+python main.py estimation_folder groud_truth_folder --VDR --PDR
 ```
 
 ### 2. 評価するファイルを選択
 特定の軌跡ファイルを指定して、評価するファイルを選択することができます。  
 例えば、以下のようなコマンドライン引数で実行した場合、  
-[demo_estimation/VDR/VDR_Traj_No2.txt]の評価が実行されます。
+[estimation_folder/VDR/VDR_Traj_No1.txt]の評価が実行されます。
 
 ```
-python main.py demo_estimation demo_ground_truth --VDR --file VDR_Traj_No2.txt 
+python main.py estimation_folder groud_truth_folder --VDR --file VDR_Traj_No1.txt 
 ```
 
 ### 3. 計算する指標・必要条件の選択
@@ -207,7 +250,7 @@ python main.py demo_estimation demo_ground_truth --VDR --file VDR_Traj_No2.txt
 引数なしの場合は、全ての指数の計算が実行されます  
 
 ```
-python main.py demo_estimation demo_ground_truth --I_ce --I_ca --I_eag --I_velocity --I_obstacle
+python main.py estimation_folder groud_truth_folder --I_ce --I_ca --I_eag --I_velocity --I_obstacle
 ```
 
 ### 4. スコア計算のための各指数の重みを選択
@@ -218,11 +261,11 @@ python main.py demo_estimation demo_ground_truth --I_ce --I_ca --I_eag --I_veloc
 <config.ini>
 ;weights for each index
 [WEIGHTS]
-I_ce = 0.20
+I_ce = 0.25
 I_ca = 0.20
-I_eag = 0.20
-I_velocity = 0.20
-I_obstacle = 0.20
+I_eag = 0.25
+I_velocity = 0.15
+I_obstacle = 0.15
 ```
 
 ### 5. パラメータの選択
@@ -231,27 +274,27 @@ I_ce, I_eagで計算するパーセント点を指定することができます
 引数なしの場合は50パーセント点の値が計算されます。  
 
 ```
-python main.py demo_estimation demo_ground_truth --CE_percentile 30 --EAG_percentile 75
+python main.py estimation_folder groud_truth_folder --CE_percentile 30 --EAG_percentile 75
 ```
 
 I_velocityで用いられる速度しきい値を指定することができます。  
 引数なしの場合は、1.5 m/s がしきい値として用いられます。
 
 ```
-python main.py demo_estimation demo_ground_truth --velocity 1.8
+python main.py estimation_folder groud_truth_folder --velocity 1.8
 ```
 
 I_caの計算でのカーネル密度推定のバンド幅を指定することができます。  
 バンド幅の指定がない場合は、scikit-learnのデフォルトのバンド幅が用いられます。
 ```
-python main.py demo_estimation demo_ground_truth --band_width 1.4
+python main.py estimation_folder groud_truth_folder --band_width 1.4
 ```
 
 I_caの計算を二次元ヒストグラムで行うように切り替えることが可能となっています。  
 引数なしの場合は、scipyのデフォルトパラメータのカーネル密度推定によってCAが計算されます  
 
 ```
-python main.py demo_estimation demo_ground_truth --CA_hist
+python main.py estimation_folder groud_truth_folder --CA_hist
 ```
 
 ### 6. 事前に指定したエリア重みを使用する
@@ -274,61 +317,7 @@ area2 = 0.6
 
 用意したエリア重みの設定フィアルのパスを指定してください。
 ```
-python main.py demo_estimation demo_ground_truth --area_weights demo_area_weights.ini
-```
-
-## デモデータでの実行結果
-デモ用の正解値、推定軌跡データを利用することで、評価ツール実行の様子を確認することができます。  
-計算された指数は[demo_estimation/VDR/result/index] に保存されます。  
-以下のような推定軌跡に対して評価を行った結果です。  
-VDR_Traj_No2.txt  
-<img src="images/VDR_sample.png" width=280px>  
-
-```                                                 
-(python36) $ python main.py demo_estimation demo_ground_truth --PDR
-track: ['PDR']
-index: ['I_ce', 'I_ca', 'I_eag', 'I_velocity', 'I_obstacle', 'I_coverage']
-PDR_Traj_No1.txt evaluation progress...
-100%|█████████████████████████████████████| 19927/19927 [00:01<00:00, 10515.99it/s]
-PDR_Traj_No2.txt evaluation progress...
-100%|█████████████████████████████████████| 40998/40998 [00:03<00:00, 10556.67it/s]
-PDR_Traj_No4.txt evaluation progress...
-100%|█████████████████████████████████████| 15304/15304 [00:01<00:00, 10626.68it/s]
-PDR_Traj_No5.txt evaluation progress...
-100%|█████████████████████████████████████| 19332/19332 [00:01<00:00, 10726.74it/s]
-PDR_Traj_No6.txt evaluation progress...
-P00%|█████████████████████████████████████| 41161/41161 [00:03<00:00, 10324.19it/s]
-PDR_Traj_No7.txt evaluation progress...
-100%|█████████████████████████████████████| 45351/45351 [00:04<00:00, 10443.82it/s]
--------- file index --------
-   file_name        I_ce     I_ca     I_eag    I_velocity   I_obstacle   I_coverage
-===================================================================================
-PDR_Traj_No1.txt   93.816   77.300   100.000     96.005       98.661       97.101
-PDR_Traj_No2.txt   95.775   91.027   100.000     98.576       98.777       99.506
-PDR_Traj_No4.txt   89.638   62.864   100.000     99.889       99.310       97.606
-PDR_Traj_No5.txt   94.163   76.925   100.000     98.588       98.000       97.463
-PDR_Traj_No6.txt   92.947   80.694   100.000     98.205       98.975       98.368
-PDR_Traj_No7.txt   94.758   81.695   100.000     99.632       99.555       96.942
-
--------- total index --------
- I_ce     I_ca     I_eag    I_velocity   I_obstacle   I_coverage   Score
-=========================================================================
-94.033   78.418   100.000     98.482       98.879       97.831     91.762
-
--------- file indicator --------
-   file_name       CE50     CA     EAG50   requirement_velocity   requirement_obstacle
-======================================================================================
-PDR_Traj_No1.txt   2.793   2.270   0.047          0.246                  0.013
-PDR_Traj_No2.txt   2.225   0.897   0.010          0.130                  0.012
-PDR_Traj_No4.txt   4.005   3.714   0.012          0.090                  0.007
-PDR_Traj_No5.txt   2.693   2.308   0.011          0.150                  0.020
-PDR_Traj_No6.txt   3.045   1.931   0.016          0.172                  0.010
-PDR_Traj_No7.txt   2.520   1.830   0.012          0.081                  0.004
-
--------- total indicator --------
-CE50     CA     EAG50   requirement_velocity   requirement_obstacle
-===================================================================
-2.730   2.158   0.012          0.145                  0.011
+python main.py estimation_folder groud_truth_folder --area_weights demo_area_weights.ini
 ```
 
 ## ライセンス
